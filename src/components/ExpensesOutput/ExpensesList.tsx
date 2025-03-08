@@ -1,12 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList } from "react-native";
+import ExpenseItem from "./ExpenseItem";
 
-export default function ExpensesList() {
-  return (
-    <View>
-      <Text>ExpensesList</Text>
-    </View>
-  )
+function renderExpenseItem(ItemData) {
+  return <ExpenseItem {...ItemData.item} />;
 }
 
-const styles = StyleSheet.create({})
+export default function ExpensesList({ expenses }) {
+  return (
+    <FlatList
+      data={expenses}
+      renderItem={renderExpenseItem}
+      keyExtractor={(item) => item.id}
+    />
+  );
+}
+
+export default ExpensesList;
+

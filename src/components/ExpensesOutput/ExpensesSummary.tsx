@@ -1,12 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 
-export default function ExpensesSummary() {
+export default function ExpensesSummary({ expenses, periodName }) {
+  console.log("veriiii:", expenses)
+  const expensesSum = expenses.reduce((sum, expense) => {
+    return sum + expense.amount;
+  }, 0);
+
+  console.log("expensesSum:", expensesSum)
+
   return (
     <View>
-      <Text>ExpensesSummary</Text>
+      <Text>{periodName}</Text>
+      <Text>{expensesSum.toFixed(2)}</Text>
     </View>
-  )
+  );
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

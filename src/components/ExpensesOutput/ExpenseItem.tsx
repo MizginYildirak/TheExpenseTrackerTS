@@ -1,12 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Pressable } from "react-native";
+import React from "react";
 
-export default function ExpenseItem() {
+export default function ExpenseItem({ id, description, amount, date }) {
   return (
-    <View>
-      <Text>ExpenseItem</Text>
-    </View>
-  )
+    <Pressable>
+      <View>
+        <View>
+          <Text>{description}</Text>
+          <Text>{date}</Text>
+        </View>
+        <Text>{amount.toFixed(2)}</Text>
+      </View>
+    </Pressable>
+  );
 }
-
-const styles = StyleSheet.create({})
