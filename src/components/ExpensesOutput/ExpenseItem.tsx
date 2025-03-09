@@ -1,15 +1,23 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import React from "react";
+import { useNavigation } from '@react-navigation/native';
 
 export default function ExpenseItem({ id, description, amount, date }) {
+  const navigation = useNavigation();
+
+  function expensePressHandler() {
+    navigation.navigate('ManageExpense', {
+      expenseId: id
+    });
+  }
+
   return (
-    <Pressable>
+    <Pressable onpress={expensePressHandler}>
       <View>
         <View>
           <Text>{description}</Text>
           <Text>{date}</Text>
         </View>
-        <Text>{amount.toFixed(2)}</Text>
+        <Text>{amount}</Text>
       </View>
     </Pressable>
   );
