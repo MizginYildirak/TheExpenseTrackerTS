@@ -9,6 +9,10 @@ export default function ManageExpense({route, navigation}) {
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
 
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === editedExpenseId
+  );
+
   function cancelHandler() {
     navigation.goBack();
   }
@@ -39,6 +43,7 @@ export default function ManageExpense({route, navigation}) {
         submitButtonLabel={isEditing ? "Update" : "Add"}
         onCancel={cancelHandler}
         onSubmit={confirmHandler}
+        defaultValues={selectedExpense}
       />
     </View>
   );

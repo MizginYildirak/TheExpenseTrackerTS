@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
+import { useState, useEffect } from "react";
 import Input from "./Input";
 import Button from "../UI/Button";
+import { getFormattedDate } from "../util/date";
 
 export default function ExpenseForm({
   submitButtonLabel,
@@ -8,30 +10,80 @@ export default function ExpenseForm({
   onSubmit,
   defaultValues,
 }) {
+  const [inputs, setInputs] = useState({
+    amount: {
+      value: defaultValues ? defaultValues.amount.toString() : "",
+    },
+    date: {
+      value: defaultValues ? getFormattedDate(defaultValues.date) : "",
+    },
+    description: {
+      value: defaultValues ? defaultValues.description : "",
+    },
+  });
+
+  useEffect(() => {
+    if (defaultValues) {
+      setInputs({
+        amount: { value: defaultValues.amount.toString() },
+        date: { value: defaultValues.date },
+        description: { value: defaultValues.description },
+      });
+    }
+  }, [defaultValues]);
+
+  function inputChangedHandler(inputIdentifier, enteredValue) {
+    setInputs((curInputs) => {
+      return {
+        ...curInputs,
+        [inputIdentifier]: { value: enteredValue },
+      };
+    });
+  }
+
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputs.amount.value,
+      date: new Date(inputs.date.value),
+      description: inputs.description.value,
+    };
+    onSubmit(expenseData);
+  }
+
+  console.log("amount:", inputs.amount.value);
+  console.log("date:", inputs.date.value);
+  console.log("description:", inputs.description.value);
+
   return (
     <View style={styles.form}>
       <Text style={styles.title}>Your Expense</Text>
       <View>
         <View style={styles.inputsRow}>
           <Input
-            style={styles.rowInput} // Input stillerini burada birleştirdik
-            defaultValue={defaultValues?.amount}
+            style={styles.rowInput}
+            value={inputs.amount.value}
+            onChangeText={inputChangedHandler.bind(this, "amount")}
+            label="Amount"
+            keyboardType="numeric"
           />
           <Input
-            style={styles.rowInput} // Input stillerini burada birleştirdik
-            defaultValue={defaultValues?.date}
+            style={styles.rowInput}
+            value={inputs.date.value}
+            onChangeText={inputChangedHandler.bind(this, "date")}
+            label="Date"
           />
         </View>
         <Input
-          // Üçüncü input için de aynı stil
-          defaultValue={defaultValues?.category}
+          value={inputs.description.value}
+          onChangeText={inputChangedHandler.bind(this, "description")}
+          label="Description"
         />
       </View>
       <View style={styles.buttons}>
         <Button style={styles.button} onPress={onCancel}>
           Cancel
         </Button>
-        <Button style={styles.button} onPress={onSubmit}>
+        <Button style={styles.button} onPress={submitHandler}>
           {submitButtonLabel}
         </Button>
       </View>
@@ -52,14 +104,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputsRow: {
-    flexDirection: "row", // Elemanları yan yana yerleştirir
-    justifyContent: "space-between", // Aralarındaki boşluğu eşitler
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: 30,
   },
   rowInput: {
-  
     width: 175,
-    height: 40
+    height: 40,
   },
   buttons: {
     flexDirection: "row",
