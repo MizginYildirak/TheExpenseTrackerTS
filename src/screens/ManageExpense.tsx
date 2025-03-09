@@ -32,10 +32,9 @@ export default function ManageExpense({route, navigation}) {
     }
     navigation.goBack();
   }
-  
 
   return (
-    <View>
+    <View style={styles.container}>
       <ExpenseForm
         submitButtonLabel={isEditing ? "Update" : "Add"}
         onCancel={cancelHandler}
@@ -45,4 +44,17 @@ export default function ManageExpense({route, navigation}) {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: "#A0C4FF"
+  },
+  deleteContainer: {
+    marginTop: 16,
+    paddingTop: 8,
+    borderTopWidth: 2,
+    backgroundColor: "#2E2E2E",
+    alignItems: "center",
+  },
+});

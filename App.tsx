@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 import RecentExpenses from "./src/screens/RecentExpenses.tsx";
 import AllExpenses from "./src/screens/AllExpenses.tsx";
@@ -18,11 +19,11 @@ function ExpensesOverview() {
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
         tabBarStyle: {
-          backgroundColor: "black",
+          backgroundColor: "#2E2E2E",
         },
-        headerTintColor: "white",
+        headerTintColor: "#FFFFFF",
         headerStyle: {
-          backgroundColor: "black",
+          backgroundColor: "#2E2E2E",
         },
 
         headerRight: ({ tintColor }) => (
@@ -40,10 +41,24 @@ function ExpensesOverview() {
       <BottomTabs.Screen
         name="RecentExpenses"
         component={RecentExpenses}
+        options={{
+          title: "Recent Expenses",
+          tabBarLabel: "Recent",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="hourglass" size={size} color={color} />
+          ),
+        }}
       ></BottomTabs.Screen>
       <BottomTabs.Screen
         name="AllExpenses"
         component={AllExpenses}
+        options={{
+          title: "All Expenses",
+          tabBarLabel: "All Expenses",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="calendar" size={size} color={color} />
+          ),
+        }}
       ></BottomTabs.Screen>
     </BottomTabs.Navigator>
   );
@@ -62,7 +77,13 @@ export default function App() {
           <Stack.Screen
             name="ManageExpense"
             component={ManageExpense}
-            options={{ presentation: "modal" }}
+            options={{
+              presentation: "modal",
+              headerStyle: {
+                backgroundColor: "#2E2E2E",
+              },
+              headerTintColor: "#FFFFFF",
+            }}
           ></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
