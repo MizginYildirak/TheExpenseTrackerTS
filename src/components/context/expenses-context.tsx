@@ -1,11 +1,12 @@
 import React, { createContext, useState, ReactNode } from "react";
+import uuid from "react-native-uuid";
 
 const DUMMY_EXPENSES = [
   {
-    id: "e1",
+    id: uuid.v4(),
     description: "A pair of shoes",
     amount: 59.99,
-    date: new Date("2021-12-19"),
+    date: "2021-12-19",
   },
 ];
 

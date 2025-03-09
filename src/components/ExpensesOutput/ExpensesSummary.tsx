@@ -2,12 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
 export default function ExpensesSummary({ expenses, periodName }) {
-  console.log("veriiii:", expenses);
+
   const expensesSum = expenses.reduce((sum, expense) => {
     return sum + expense.amount;
   }, 0);
 
-  console.log("expensesSum:", expensesSum);
+  
 
   return (
     <View style={styles.container}>

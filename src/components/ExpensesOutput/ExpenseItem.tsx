@@ -10,6 +10,8 @@ export default function ExpenseItem({ id, description, amount, date }) {
     });
   }
 
+
+
   return (
     <Pressable
       onPress={expensePressHandler}

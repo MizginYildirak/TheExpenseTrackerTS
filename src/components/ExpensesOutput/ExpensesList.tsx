@@ -6,6 +6,8 @@ function renderExpenseItem(ItemData) {
 }
 
 export default function ExpensesList({ expenses }) {
+
+
   return (
     <FlatList
       data={expenses}

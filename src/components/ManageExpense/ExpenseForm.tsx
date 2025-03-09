@@ -22,16 +22,6 @@ export default function ExpenseForm({
     },
   });
 
-  useEffect(() => {
-    if (defaultValues) {
-      setInputs({
-        amount: { value: defaultValues.amount.toString() },
-        date: { value: defaultValues.date },
-        description: { value: defaultValues.description },
-      });
-    }
-  }, [defaultValues]);
-
   function inputChangedHandler(inputIdentifier, enteredValue) {
     setInputs((curInputs) => {
       return {
@@ -44,15 +34,13 @@ export default function ExpenseForm({
   function submitHandler() {
     const expenseData = {
       amount: +inputs.amount.value,
-      date: new Date(inputs.date.value),
+      date: inputs.date.value,
       description: inputs.description.value,
     };
     onSubmit(expenseData);
   }
 
-  console.log("amount:", inputs.amount.value);
-  console.log("date:", inputs.date.value);
-  console.log("description:", inputs.description.value);
+
 
   return (
     <View style={styles.form}>

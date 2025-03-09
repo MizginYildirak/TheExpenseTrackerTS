@@ -5,7 +5,6 @@ import { ExpensesContext } from "../components/context/expenses-context";
 export default function AllExpenses() {
   const { expenses } = useContext(ExpensesContext);
 
-  console.log(expenses)
   return (
     <ExpensesOutput
       expenses={expenses}
