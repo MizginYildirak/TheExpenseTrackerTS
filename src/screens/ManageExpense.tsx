@@ -1,9 +1,16 @@
-import { useState, useContext, useEffect, useCallback, useLayoutEffect } from "react";
+import {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { ExpensesContext } from "../components/context/expenses-context";
 import { useFocusEffect } from "@react-navigation/native";
 import Button from "../components/UI/Button";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ManageExpense({ route, navigation }) {
   const expensesCtx = useContext(ExpensesContext);
@@ -12,14 +19,18 @@ export default function ManageExpense({ route, navigation }) {
 
   const editedExpenseId = route.params?.expenseId;
 
+  console.log("editedExpenseId:", editedExpenseId);
+
   const selectedExpense = expensesCtx.expenses.find(
     (expense) => expense.id === editedExpenseId
   );
 
+  console.log("selectedExpense:", selectedExpense);
+
   useFocusEffect(
     useCallback(() => {
       const updatedExpenseId = route.params?.expenseId;
-      console.log("Route Params:", route.params); 
+      console.log("Route Params:", route.params);
       console.log("Güncellenen expenseId:", updatedExpenseId);
 
       if (updatedExpenseId) {
@@ -47,26 +58,23 @@ export default function ManageExpense({ route, navigation }) {
   };
 
   const deleteExpenseHandler = () => {
-    Alert.alert(
-      "Are you sure?",
-      "Do you really want to delete this expense?",
-      [
-        { text: "No", style: "cancel" },
-        {
-          text: "Yes", 
-          onPress: () => {
-            expensesCtx.deleteExpense(editedExpenseId);
-            navigation.goBack();
-          }
-        }
-      ]
-    );
+    Alert.alert("Are you sure?", "Do you really want to delete this expense?", [
+      { text: "No", style: "cancel" },
+      {
+        text: "Yes",
+        onPress: () => {
+          expensesCtx.deleteExpense(editedExpenseId);
+          navigation.goBack();
+        },
+      },
+    ]);
   };
 
   const confirmHandler = (expenseData) => {
     if (isEditing) {
       expensesCtx.updateExpense(editedExpenseId, expenseData);
     } else {
+      console.log("expenseData:", expenseData);
       expensesCtx.addExpense(expenseData);
     }
     navigation.goBack();
@@ -84,7 +92,12 @@ export default function ManageExpense({ route, navigation }) {
       />
       {isEditing && (
         <View style={styles.deleteContainer}>
-          <Button title="Delete" onPress={deleteExpenseHandler} />
+          <Ionicons
+            style={styles.delete}
+            name="trash-bin-outline"
+            color="red"
+            onPress={deleteExpenseHandler}
+          />
         </View>
       )}
     </View>
@@ -97,11 +110,12 @@ const styles = StyleSheet.create({
     padding: 24,
     backgroundColor: "#A0C4FF",
   },
+  delete: {
+    fontSize: 30,
+  },
   deleteContainer: {
     marginTop: 16,
     paddingTop: 8,
-    borderTopWidth: 2,
-    backgroundColor: "#2E2E2E",
     alignItems: "center",
   },
 });

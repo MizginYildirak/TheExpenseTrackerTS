@@ -42,7 +42,11 @@ export const ExpensesContextProvider = ({ children }: ComponentProps) => {
   const [expenses, setExpenses] = useState<Expense[]>(DUMMY_EXPENSES);
 
   const addExpense = (expense: Expense) => {
-    setExpenses((prevExpenses) => [...prevExpenses, expense]);
+    const newExpense = {
+      ...expense,  
+      id: uuid.v4(), 
+    };
+    setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
   };
 
   const deleteExpense = (id: string) => {
@@ -54,7 +58,7 @@ export const ExpensesContextProvider = ({ children }: ComponentProps) => {
   const updateExpense = (id: string, updatedExpense: Expense) => {
     setExpenses((prevExpenses) =>
       prevExpenses.map((expense) =>
-        expense.id === id ? updatedExpense : expense
+        expense.id === id ? {...updatedExpense, id: id} : expense
       )
     );
   };

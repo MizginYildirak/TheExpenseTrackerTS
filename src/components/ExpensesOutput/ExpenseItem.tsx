@@ -5,12 +5,11 @@ export default function ExpenseItem({ id, description, amount, date }) {
   const navigation = useNavigation();
 
   function expensePressHandler() {
+    console.log("id:", id)
     navigation.navigate("ManageExpense", {
       expenseId: id,
     });
   }
-
-
 
   return (
     <Pressable

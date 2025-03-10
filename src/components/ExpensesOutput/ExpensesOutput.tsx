@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import ExpensesList from "./ExpensesList";
 import ExpensesSummary from "./ExpensesSummary";
 
-export default function ExpensesOutput({ expenses, fallbackText }) {
+export default function ExpensesOutput({ expenses, fallbackText, expensesPeriod }) {
   let content = <Text style={styles.infoText}>{fallbackText}</Text>;
 
   if (expenses.length > 0) {
@@ -11,7 +11,7 @@ export default function ExpensesOutput({ expenses, fallbackText }) {
 
   return (
     <View style={styles.container}>
-      <ExpensesSummary expenses={expenses} />
+      <ExpensesSummary expenses={expenses} periodName={expensesPeriod} />
       {content}
     </View>
   );
