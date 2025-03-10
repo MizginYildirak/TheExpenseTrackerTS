@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { useState } from "react";
 import Input from "./Input";
 import Button from "../UI/Button";
@@ -11,14 +11,22 @@ interface ExpenseFormProps {
   defaultValues?: Expense;
 }
 
-const ExpenseForm: React.FC<ExpenseFormProps> = ({ submitButtonLabel, onCancel, onSubmit, defaultValues }) => {
+const ExpenseForm: React.FC<ExpenseFormProps> = ({
+  submitButtonLabel,
+  onCancel,
+  onSubmit,
+  defaultValues,
+}) => {
   const [inputs, setInputs] = useState({
     amount: { value: defaultValues ? defaultValues.amount.toString() : "" },
     date: { value: defaultValues ? getFormattedDate(defaultValues.date) : "" },
     description: { value: defaultValues ? defaultValues.description : "" },
   });
 
-  const inputChangedHandler = (inputIdentifier: string, enteredValue: string) => {
+  const inputChangedHandler = (
+    inputIdentifier: string,
+    enteredValue: string
+  ) => {
     setInputs((curInputs) => ({
       ...curInputs,
       [inputIdentifier]: { value: enteredValue },
@@ -26,6 +34,16 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ submitButtonLabel, onCancel, 
   };
 
   const submitHandler = () => {
+
+    if (
+      inputs.amount.value.trim() === "" ||
+      inputs.date.value.trim() === "" ||
+      inputs.description.value.trim() === ""
+    ) {
+      Alert.alert("please fill in the blanks!")
+      return; 
+    }
+
     const expenseData = {
       amount: parseFloat(inputs.amount.value),
       date: inputs.date.value,
@@ -60,8 +78,12 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ submitButtonLabel, onCancel, 
         />
       </View>
       <View style={styles.buttons}>
-        <Button style={styles.button} onPress={onCancel}>Cancel</Button>
-        <Button style={styles.button} onPress={submitHandler}>{submitButtonLabel}</Button>
+        <Button style={styles.button} onPress={onCancel}>
+          Cancel
+        </Button>
+        <Button style={styles.button} onPress={submitHandler}>
+          {submitButtonLabel}
+        </Button>
       </View>
     </View>
   );
